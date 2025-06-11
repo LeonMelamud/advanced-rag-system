@@ -59,7 +59,7 @@ build-base:
 	@echo "✅ Base image built successfully"
 
 # Build all services
-build-all: build-base $(addprefix build-,$(SERVICES))
+build-all: down build-base $(addprefix build-,$(SERVICES))
 	@echo "✅ All services built successfully"
 
 # Generic service build rule
@@ -78,7 +78,7 @@ validate-service-%:
 
 # Individual service builds (for convenience)
 build-auth: build-auth_service
-build-chat: build-chat_service  
+build-chat: build-chat_service
 build-collection: build-collection_service
 build-file: build-file_service
 build-mcp: build-mcp_orchestrator
@@ -91,9 +91,8 @@ run-service:
 		echo "Available services: $(SERVICES)"; \
 		exit 1; \
 	fi
-	@echo "Starting $(SERVICE)..."
-	docker run -d --name $(SERVICE) collections_ai_assistance-$(SERVICE)
-	@echo "✅ $(SERVICE) started"
+	@echo "Running service: $(SERVICE)"
+	@docker-compose run --rm --service-ports $(SERVICE)
 
 stop-service:
 	@if [ -z "$(SERVICE)" ]; then \
@@ -101,10 +100,8 @@ stop-service:
 		echo "Usage: make stop-service SERVICE=<service_name>"; \
 		exit 1; \
 	fi
-	@echo "Stopping $(SERVICE)..."
-	docker stop $(SERVICE) || true
-	docker rm $(SERVICE) || true
-	@echo "✅ $(SERVICE) stopped"
+	@echo "Stopping service: $(SERVICE)"
+	@docker-compose stop $(SERVICE)
 
 logs:
 	@if [ -z "$(SERVICE)" ]; then \
@@ -112,7 +109,7 @@ logs:
 		echo "Usage: make logs SERVICE=<service_name>"; \
 		exit 1; \
 	fi
-	docker logs -f $(SERVICE)
+	@docker logs -f rag_$(SERVICE)
 
 # Docker Compose operations
 up:
@@ -164,7 +161,7 @@ dev-setup: build-all
 	@echo "✅ Development environment ready"
 
 # Quick rebuild (useful during development)
-quick-build-%: 
+quick-build-%:
 	@echo "Quick rebuilding $* service..."
 	docker build -f backend/$*_service/Dockerfile -t collections_ai_assistance-$*_service . --no-cache
 	@echo "✅ $* service rebuilt"
@@ -237,4 +234,4 @@ validate-system: health-check integration-test test-shared
 	@echo ""
 	@echo "🎉 FULL SYSTEM VALIDATION COMPLETED"
 	@echo "===================================="
-	@echo "All services are running and integrated correctly!" 
+	@echo "All services are running and integrated correctly!"

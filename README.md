@@ -5,6 +5,7 @@ A sophisticated Retrieval Augmented Generation (RAG) system designed to ingest, 
 ## 🚀 Features
 
 ### Core Capabilities
+
 - **Multi-Format File Processing**: Support for PDF, CSV, TXT, and Audio files (up to 100MB)
 - **Advanced Text Extraction**: Robust extraction with metadata preservation
 - **Audio Transcription**: Convert audio files to searchable text
@@ -15,6 +16,7 @@ A sophisticated Retrieval Augmented Generation (RAG) system designed to ingest, 
 - **External Tools Integration**: Optional MCP protocol support
 
 ### Enterprise Features
+
 - **Role-Based Access Control (RBAC)**: Secure collection and document access
 - **Configuration Versioning**: Track and revert collection settings
 - **Horizontal Scalability**: Microservices architecture with Kubernetes support
@@ -33,6 +35,7 @@ The system follows a microservices architecture with 6 core services:
 6. **Tools Integration Service**: External tools and MCP protocol support
 
 ### Technology Stack
+
 - **Backend**: FastAPI (Python 3.11+)
 - **Frontend**: React with TypeScript
 - **Vector Database**: Qdrant (primary), Pinecone/Weaviate (alternatives)
@@ -52,12 +55,14 @@ The system follows a microservices architecture with 6 core services:
 ## 🛠️ Installation
 
 ### 1. Clone the Repository
+
 ```bash
 git clone https://github.com/leon-melamud/advanced-rag-system.git
 cd advanced-rag-system
 ```
 
 ### 2. Install Python Dependencies with uv
+
 ```bash
 # Install uv if not already installed
 curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -79,9 +84,10 @@ uv pip install -e ".[ml-advanced]"  # Advanced ML features
 ```
 
 ### 3. Environment Setup
+
 ```bash
 # Copy environment template
-cp .env.example .env
+cp env.template .env
 
 # Edit .env with your configuration
 # - Database URLs
@@ -91,6 +97,7 @@ cp .env.example .env
 ```
 
 ### 4. Database Setup
+
 ```bash
 # Start PostgreSQL and Qdrant with Docker Compose
 docker-compose up -d postgres qdrant redis
@@ -101,6 +108,7 @@ alembic upgrade head
 ```
 
 ### 5. Development Setup
+
 ```bash
 # Install pre-commit hooks
 pre-commit install
@@ -128,7 +136,7 @@ make build-all
 
 # Build individual services
 make build-auth          # Auth service
-make build-chat          # Chat service  
+make build-chat          # Chat service
 make build-collection    # Collection service
 make build-file          # File service
 make build-mcp           # MCP orchestrator
@@ -155,6 +163,7 @@ make clean-all          # Remove all images including base
 ```
 
 ### Development Mode
+
 ```bash
 # Complete development setup
 make dev-setup
@@ -168,6 +177,7 @@ make health-check
 ```
 
 ### Production Mode
+
 ```bash
 # Build and deploy with Kubernetes
 kubectl apply -f deploy/kubernetes/
@@ -179,6 +189,7 @@ docker-compose -f deploy/docker-compose.prod.yml up -d
 ## 📖 Usage
 
 ### 1. Create a Knowledge Collection
+
 ```python
 import httpx
 
@@ -202,6 +213,7 @@ collection = response.json()
 ```
 
 ### 2. Upload Documents
+
 ```python
 # Upload a PDF file
 files = {"file": open("manual.pdf", "rb")}
@@ -212,6 +224,7 @@ upload_result = response.json()
 ```
 
 ### 3. Chat with Your Documents
+
 ```python
 # Start a chat session
 chat_data = {
@@ -259,16 +272,17 @@ This system implements **strict separation of concerns** between configuration s
 ### Quick Setup
 
 1. **Choose Your Environment**:
+
    ```bash
    # Development
    cp config/secrets/env.development.template .env.development
-   
-   # Testing  
+
+   # Testing
    cp config/secrets/env.testing.template .env.testing
-   
+
    # Staging
    cp config/secrets/env.staging.template .env.staging
-   
+
    # Production
    cp config/secrets/env.production.template .env.production
    ```
@@ -278,23 +292,25 @@ This system implements **strict separation of concerns** between configuration s
 
 ### Environment-Specific Settings
 
-| Environment | Purpose | Database Port | Redis Port | Qdrant Port | Log Level |
-|-------------|---------|---------------|------------|-------------|-----------|
-| Development | Local dev & debugging | 5433 | 6380 | 6335/6336 | DEBUG |
-| Testing | Automated testing | 5434 | 6381 | 6337/6338 | INFO |
-| Staging | Pre-production testing | Cloud | Cloud | Cloud | INFO |
-| Production | Live system | Cloud | Cloud | Cloud | WARNING |
+| Environment | Purpose                | Database Port | Redis Port | Qdrant Port | Log Level |
+| ----------- | ---------------------- | ------------- | ---------- | ----------- | --------- |
+| Development | Local dev & debugging  | 5433          | 6380       | 6335/6336   | DEBUG     |
+| Testing     | Automated testing      | 5434          | 6381       | 6337/6338   | INFO      |
+| Staging     | Pre-production testing | Cloud         | Cloud      | Cloud       | INFO      |
+| Production  | Live system            | Cloud         | Cloud      | Cloud       | WARNING   |
 
 ### Required Secrets
 
 #### All Environments
+
 - Database credentials (host, port, user, password)
-- Redis credentials (host, port, password)  
+- Redis credentials (host, port, password)
 - Qdrant credentials (host, port, API key)
 - JWT secret key
 - LLM API keys (OpenAI, Gemini, Anthropic)
 
 #### Production Additional
+
 - Production domain URLs
 - Monitoring credentials (Sentry)
 - File storage credentials (AWS S3)
@@ -316,6 +332,7 @@ This system implements **strict separation of concerns** between configuration s
 ## 🔍 Monitoring
 
 ### Health Checks
+
 ```bash
 # Check system health
 curl http://localhost:8000/health
@@ -326,6 +343,7 @@ curl http://localhost:8002/health  # Chat service
 ```
 
 ### Metrics
+
 - Prometheus metrics available at `/metrics` endpoint
 - Grafana dashboards in `deploy/monitoring/`
 - Jaeger tracing at `http://localhost:16686`
@@ -339,6 +357,7 @@ curl http://localhost:8002/health  # Chat service
 5. Open a Pull Request
 
 ### Development Guidelines
+
 - Follow PEP 8 style guide
 - Write comprehensive tests
 - Update documentation
@@ -363,4 +382,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Built with ❤️ for intelligent document processing and AI-powered conversations.** 
+**Built with ❤️ for intelligent document processing and AI-powered conversations.**
