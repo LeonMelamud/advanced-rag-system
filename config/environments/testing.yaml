@@ -1,0 +1,135 @@
+# Testing Environment Configuration
+# This file contains non-sensitive testing settings
+# Sensitive keys should be in .env.test files or environment variables
+
+# Service Configuration
+services:
+  auth_service:
+    host: "0.0.0.0"
+    port: 18001
+    log_level: "INFO"
+    
+  file_service:
+    host: "0.0.0.0"
+    port: 18002
+    log_level: "INFO"
+    
+  chat_service:
+    host: "0.0.0.0"
+    port: 18003
+    log_level: "INFO"
+    
+  collection_service:
+    host: "0.0.0.0"
+    port: 18004
+    log_level: "INFO"
+    
+  mcp_orchestrator:
+    host: "0.0.0.0"
+    port: 18005
+    log_level: "INFO"
+
+# Database Configuration (non-sensitive parts)
+database:
+  host: "localhost"
+  port: 5434  # Different port for test DB
+  name: "advanced_rag_test"
+  pool_size: 5
+  max_overflow: 10
+  echo: false  # Reduce noise in tests
+
+# Redis Configuration (non-sensitive parts)
+redis:
+  host: "localhost"
+  port: 6381  # Different port for test Redis
+  db: 1
+  decode_responses: true
+
+# Vector Database Configuration
+qdrant:
+  host: "localhost"
+  port: 6337  # Different port for test Qdrant
+  grpc_port: 6338
+  timeout: 10
+
+# CORS Configuration
+cors:
+  origins:
+    - "http://localhost:3001"
+    - "http://127.0.0.1:3001"
+  methods: ["*"]
+  headers: ["*"]
+  credentials: true
+
+# LLM Configuration (non-sensitive parts)
+llm:
+  default_provider: "mock"  # Use mock provider for tests
+  default_model: "mock-gpt-4"
+  default_embedding_model: "mock-embedding"
+  timeout: 10
+  max_retries: 1
+
+# Chat Configuration
+chat:
+  max_conversation_history: 10  # Smaller for tests
+  max_context_tokens: 1000
+  default_top_k: 3
+  stream_chunk_size: 256
+
+# RAG Configuration
+rag:
+  context_merge_strategy: "enhanced_rrf"
+  rrf_k: 60.0
+  diversity_penalty: 0.1
+  max_chunks_per_collection: 5
+
+# Collection Configuration
+collections:
+  max_per_user: 10  # Smaller limits for tests
+  max_documents_per_collection: 100
+  max_versions: 5
+  default_chunking_strategy: "fixed"
+  default_chunk_size: 500
+  default_chunk_overlap: 50
+
+# MCP Configuration
+mcp:
+  enable_tool_execution: false  # Disable for most tests
+  tool_execution_timeout: 5
+  max_concurrent_executions: 2
+  enable_sandboxing: true
+  execution_environment: "mock"
+  docker_image: "python:3.13-slim"
+  docker_network: "bridge"
+
+# Security Configuration (non-sensitive parts)
+security:
+  jwt_algorithm: "HS256"
+  access_token_expire_minutes: 5  # Short for tests
+  refresh_token_expire_days: 1
+  password_min_length: 4  # Relaxed for tests
+  max_login_attempts: 3
+  lockout_duration_minutes: 1
+
+# Rate Limiting
+rate_limiting:
+  enabled: false  # Disabled for tests
+  requests_per_minute: 1000
+  burst_size: 100
+
+# Monitoring
+monitoring:
+  enable_metrics: false
+  enable_tracing: false
+  log_requests: false
+  log_responses: false
+
+# File Processing
+file_processing:
+  max_file_size_mb: 10  # Smaller for tests
+  allowed_extensions:
+    - ".txt"
+    - ".md"
+    - ".json"
+  temp_dir: "/tmp/rag_test_uploads"
+  cleanup_interval_hours: 1 

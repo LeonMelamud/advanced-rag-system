@@ -1,0 +1,411 @@
+---
+description: main rule
+globs: main.mdc
+alwaysApply: false
+---
+# 🔍 ISOLATION-FOCUSED MEMORY BANK SYSTEM
+
+🚨 CRITICAL RULE: MEMORY BANK CREATION IS MANDATORY 🚨
+Memory Bank MUST be created BEFORE any other operation in ANY mode
+NO process can continue without verifying Memory Bank existence
+
+## 🎯 CORE DEVELOPMENT PRINCIPLES - MANDATORY
+
+### 🔄 DRY (Don't Repeat Yourself) - ALWAYS ENFORCE
+- **NEVER duplicate code, patterns, or configurations**
+- **Extract common patterns to shared modules/components**
+- **Use inheritance, mixins, and composition over duplication**
+- **Create base classes for common functionality**
+- **Share configurations, models, and utilities across services**
+
+### 💎 KISS (Keep It Simple, Stupid) - ALWAYS APPLY
+- **Choose the simplest solution that works**
+- **Avoid over-engineering and unnecessary complexity**
+- **Write clear, readable code over clever code**
+- **Use straightforward patterns and well-known solutions**
+- **Minimize dependencies and abstractions**
+
+### 🏗️ REUSABILITY CHECKLIST - MANDATORY BEFORE ANY CODE
+- [ ] Can this be extracted to a shared component?
+- [ ] Does this pattern already exist elsewhere?
+- [ ] Can I inherit from a base class instead of duplicating?
+- [ ] Is there a simpler way to achieve this?
+- [ ] Will this be maintainable in 6 months?
+
+> **TL;DR:** This system is designed to work with Cursor custom modes, where each mode loads only the rules it needs. The system uses visual Mermaid diagrams and selective document loading to optimize context usage.
+
+## 🧭 MODE-SPECIFIC VISUAL MAPS
+
+```mermaid
+graph TD
+    subgraph Modes["Cursor Custom Modes"]
+        VAN["VAN MODE<br>Initialization"] --> PLAN["PLAN MODE<br>Task Planning"]
+        PLAN --> Creative["CREATIVE MODE<br>Design Decisions"]
+        Creative --> Implement["IMPLEMENT MODE<br>Code Implementation"]
+        Implement --> Reflect["REFLECT MODE<br>Task Review"]
+        Reflect --> Archive["ARCHIVE MODE<br>Documentation"]
+    end
+    
+    VAN -.->|"Loads"| VANRules["• main.md<br>• platform-awareness.md<br>• file-verification.md<br>• workflow-init.md"]
+    PLAN -.->|"Loads"| PLANRules["• main.md<br>• task-tracking.md<br>• planning-process.md"]
+    Creative -.->|"Loads"| CreativeRules["• main.md<br>• creative-phase.md<br>• design-patterns.md"]
+    Implement -.->|"Loads"| ImplementRules["• main.md<br>• command-execution.md<br>• implementation-guide.md"]
+    Reflect -.->|"Loads"| ReflectRules["• main.md<br>• reflection-format.md"]
+    Archive -.->|"Loads"| ArchiveRules["• main.md<br>• archiving-guide.md"]
+```
+
+## 📋 MEMORY BANK VERIFICATION - MANDATORY IN ALL MODES
+
+```mermaid
+graph TD
+    Start["Mode Activation"] --> CheckMemBank{"Memory Bank<br>Exists?"}
+    
+    CheckMemBank -->|"No"| CreateMemBank["CREATE MEMORY BANK<br>[CRITICAL STEP]"]
+    CheckMemBank -->|"Yes"| VerifyMemBank["Verify Memory Bank<br>Structure"]
+    
+    CreateMemBank --> VerifyCreation{"Creation<br>Successful?"}
+    VerifyCreation -->|"No"| AbortAll["⛔ ABORT ALL OPERATIONS<br>Fix Memory Bank First"]
+    VerifyCreation -->|"Yes"| VerifyMemBank
+    
+    VerifyMemBank --> StructureCheck{"Structure<br>Valid?"}
+    StructureCheck -->|"No"| FixStructure["Fix Memory Bank<br>Structure"]
+    StructureCheck -->|"Yes"| ContinueMode["Continue with<br>Mode Operations"]
+    
+    FixStructure --> VerifyFix{"Fix<br>Successful?"}
+    VerifyFix -->|"No"| AbortAll
+    VerifyFix -->|"Yes"| ContinueMode
+    
+    style CheckMemBank fill:#ff0000,stroke:#990000,color:white,stroke-width:3px
+    style CreateMemBank fill:#ff0000,stroke:#990000,color:white,stroke-width:3px
+    style VerifyCreation fill:#ff0000,stroke:#990000,color:white,stroke-width:3px
+    style AbortAll fill:#ff0000,stroke:#990000,color:white,stroke-width:3px
+    style StructureCheck fill:#ff0000,stroke:#990000,color:white,stroke-width:3px
+    style FixStructure fill:#ff5555,stroke:#dd3333,color:white
+    style VerifyFix fill:#ff5555,stroke:#dd3333,color:white
+```
+
+## 📚 VISUAL PROCESS MAPS
+
+Each mode has its own visual process map:
+
+- @VAN Mode Map
+- @PLAN Mode Map
+- @CREATIVE Mode Map
+- @IMPLEMENT Mode Map
+- @REFLECT Mode Map
+- @ARCHIVE Mode Map
+
+## 🔄 FILE STATE VERIFICATION
+
+In this isolation-focused approach, Memory Bank files maintain continuity between modes:
+
+```mermaid
+graph TD
+    subgraph "Memory Bank Files"
+        tasks["tasks.md<br>Source of Truth"]
+        active["activeContext.md<br>Current Focus"]
+        creative["creative-*.md<br>Design Decisions"]
+        progress["progress.md<br>Implementation Status"]
+    end
+    
+    VAN["VAN MODE"] -->|"Creates/Updates"| tasks
+    VAN -->|"Creates/Updates"| active
+    
+    PLAN["PLAN MODE"] -->|"Reads"| tasks
+    PLAN -->|"Reads"| active
+    PLAN -->|"Updates"| tasks
+    
+    Creative["CREATIVE MODE"] -->|"Reads"| tasks
+    Creative -->|"Creates"| creative
+    Creative -->|"Updates"| tasks
+    
+    Implement["IMPLEMENT MODE"] -->|"Reads"| tasks
+    Implement -->|"Reads"| creative
+    Implement -->|"Updates"| tasks
+    Implement -->|"Updates"| progress
+    
+    Reflect["REFLECT MODE"] -->|"Reads"| tasks
+    Reflect -->|"Reads"| progress
+    Reflect -->|"Updates"| tasks
+    
+    Archive["ARCHIVE MODE"] -->|"Reads"| tasks
+    Archive -->|"Reads"| progress
+    Archive -->|"Archives"| creative
+```
+
+## 📋 MODE TRANSITION PROTOCOL
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant CurrentMode
+    participant NextMode
+    
+    CurrentMode->>CurrentMode: Complete Phase Requirements
+    CurrentMode->>User: "Phase complete. NEXT MODE: [mode name]"
+    User->>CurrentMode: End Current Mode
+    User->>NextMode: Start Next Mode
+    NextMode->>NextMode: Verify Required File State
+    
+    alt File State Valid
+        NextMode->>User: "Continuing from previous mode..."
+    else File State Invalid
+        NextMode->>User: "Required files not in expected state"
+        NextMode->>User: "Return to [previous mode] to complete requirements"
+    end
+```
+
+## 💻 PLATFORM-SPECIFIC COMMANDS
+
+| Action | Windows | Mac/Linux |
+|--------|---------|-----------|
+| Create file | `echo. > file.ext` | `touch file.ext` |
+| Create directory | `mkdir directory` | `mkdir -p directory` |
+| Change directory | `cd directory` | `cd directory` |
+| List files | `dir` | `ls` |
+| Show file content | `type file.ext` | `cat file.ext` |
+
+## ⚠️ COMMAND EFFICIENCY GUIDANCE
+
+For optimal performance, use efficient command chaining when appropriate:
+
+```
+# Efficient command chaining examples:
+mkdir -p project/{src,tests,docs} && cd project
+grep "TODO" $(find . -name "*.js")
+npm install && npm start
+```
+
+Refer to [command-execution.mdc](mdc:.cursor/rules/isolation_rules/Core/command-execution.mdc) for detailed guidance.
+
+## 🔄 REUSABILITY AND DRY PRINCIPLES
+
+🎯 **MANDATORY REUSABILITY ENFORCEMENT**: Always apply DRY (Don't Repeat Yourself) principles and favor reusable components:
+
+```mermaid
+graph TD
+    Duplicate["Duplicate Code<br>Detected"] --> Analyze["Analyze Common<br>Patterns"]
+    Analyze --> Extract["Extract to<br>Shared Component"]
+    Extract --> BaseComponent["Create Base<br>Component/Module"]
+    BaseComponent --> Inherit["Services Inherit<br>from Base"]
+    Inherit --> Customize["Add Service-Specific<br>Customizations"]
+    
+    subgraph "Reusability Patterns"
+        Docker["Base Dockerfiles"]
+        Config["Shared Configuration"]
+        Utils["Common Utilities"]
+        Types["Shared Types/Models"]
+        Auth["Authentication Modules"]
+    end
+    
+    BaseComponent --> Docker
+    BaseComponent --> Config
+    BaseComponent --> Utils
+    BaseComponent --> Types
+    BaseComponent --> Auth
+    
+    style Duplicate fill:#ff6b35,stroke:#d63031,color:white,stroke-width:3px
+    style Extract fill:#00b894,stroke:#00a085,color:white
+    style BaseComponent fill:#0984e3,stroke:#74b9ff,color:white
+```
+
+### 🏗️ Reusability Checklist:
+- [ ] **Dockerfiles**: Use base images for common dependencies
+- [ ] **Configuration**: Extract shared config to common modules
+- [ ] **Database**: Shared connection and model patterns
+- [ ] **Authentication**: Common auth utilities across services
+- [ ] **Validation**: Shared validation schemas and functions
+- [ ] **Logging**: Consistent logging setup across services
+- [ ] **Error Handling**: Common error response patterns
+- [ ] **Testing**: Shared test utilities and fixtures
+
+### 📦 Implementation Patterns:
+1. **Base Dockerfile Pattern**: Common dependencies in base image
+2. **Shared Module Pattern**: Common utilities in `/common` directory
+3. **Configuration Inheritance**: Base config with service overrides
+4. **Component Composition**: Reusable components over duplication
+
+## 🌐 ERROR RESOLUTION STRATEGY
+
+🔍 **MANDATORY WEB SEARCH PROTOCOL**: If an error persists after 1 attempt to fix it, MUST use web search and documentation lookup:
+
+```mermaid
+graph TD
+    Error["Error Encountered"] --> FirstAttempt["First Fix Attempt"]
+    FirstAttempt --> Success{"Fixed?"}
+    Success -->|"Yes"| Continue["Continue Development"]
+    Success -->|"No"| WebSearch["🌐 MANDATORY WEB SEARCH"]
+    
+    WebSearch --> BraveSearch["Use Brave MCP<br>mcp_brave-search_brave_web_search"]
+    WebSearch --> Context7["Use Context7 MCP<br>mcp_context7-mcp_resolve-library-id<br>mcp_context7-mcp_get-library-docs"]
+    
+    BraveSearch --> SearchPattern["Search: '[error] [tech] 2024'"]
+    Context7 --> GetDocs["Get Latest Documentation"]
+    
+    SearchPattern --> ApplyFix["Apply Web-Found Solution"]
+    GetDocs --> ApplyFix
+    ApplyFix --> Verify{"Fixed?"}
+    Verify -->|"Yes"| Continue
+    Verify -->|"No"| EscalateError["Document Issue &<br>Seek Alternative Approach"]
+    
+    style WebSearch fill:#ff6b35,stroke:#d63031,color:white,stroke-width:3px
+    style BraveSearch fill:#0984e3,stroke:#74b9ff,color:white
+    style Context7 fill:#6c5ce7,stroke:#a29bfe,color:white
+```
+
+### 🔍 Search Patterns:
+- **Errors**: `"[exact error message] solution 2024"`
+- **Best Practices**: `"[technology] best practices 2024"`
+- **Configuration**: `"[technology] configuration guide 2024"`
+- **Dependencies**: `"[package] missing dependency fix 2024"`
+
+### 📚 Documentation Lookup:
+1. Use `mcp_context7-mcp_resolve-library-id` to find library
+2. Use `mcp_context7-mcp_get-library-docs` to get current docs
+3. Focus search on specific error or implementation pattern 
+
+## 🧠 CONTEXT MANAGEMENT - CRITICAL RULE
+
+### Context Overload Detection
+**MANDATORY**: Monitor for context overload and request new window when experiencing:
+- Context becoming too long (>50 exchanges)
+- Making repeated mistakes on simple tasks
+- Difficulty tracking previous decisions
+- Confusion about current project status
+
+### New Window Protocol
+When context overload detected:
+1. **Read Context Management Rule**: `read_file(".cursor/rules/isolation_rules/Core/context-management.mdc")`
+2. **Update Memory Bank**: Update tasks.md, activeContext.md, progress.md
+3. **Create Continuation Prompt**: Provide clear context for new session
+4. **Request New Window**: Ask user to open new window with continuation prompt
+
+**Reference**: `.cursor/rules/isolation_rules/Core/context-management.mdc`
+
+## CORE SYSTEM OVERVIEW
+
+```
+
+# MEMORY BANK SYSTEM - MAIN RULE
+
+## 🧠 MANDATORY MEMORY BANK VERIFICATION - FIRST STEP ALWAYS
+
+**CRITICAL**: Before ANY work begins, MUST verify memory bank context is loaded.
+
+### Step 1: Memory Bank Context Check
+```
+read_file({
+  target_file: ".cursor/rules/isolation_rules/Core/memory-bank-verification.mdc",
+  should_read_entire_file: true
+})
+```
+
+**VERIFY these files are attached to conversation:**
+- [ ] `memory-bank/tasks.md` - Current task status and complexity level
+- [ ] `memory-bank/activeContext.md` - Current session context and focus  
+- [ ] `memory-bank/progress.md` - Overall project progress and achievements
+- [ ] `memory-bank/best_practices.md` - DRY/KISS principles and guidelines
+
+**IF MEMORY BANK FILES MISSING:**
+```
+🚨 MEMORY BANK CONTEXT MISSING
+
+I cannot proceed without the memory bank context. Please attach these files:
+- memory-bank/tasks.md
+- memory-bank/activeContext.md
+- memory-bank/progress.md  
+- memory-bank/best_practices.md
+
+These files are essential for understanding current project state and applying correct principles.
+```
+
+**STOP ALL WORK until memory bank context is provided.**
+
+## 🎯 MANDATORY DEVELOPMENT PRINCIPLES - ALWAYS ENFORCE
+
+### 🔄 DRY (Don't Repeat Yourself) - CORE PRINCIPLE
+- **NEVER duplicate code, patterns, or configurations**
+- **Extract common patterns to shared modules/components**
+- **Use inheritance, mixins, and composition over duplication**
+- **Create base classes for common functionality**
+- **Share configurations, models, and utilities across services**
+
+### 💎 KISS (Keep It Simple, Stupid) - CORE PRINCIPLE
+- **Choose the simplest solution that works**
+- **Avoid over-engineering and unnecessary complexity**
+- **Write clear, readable code over clever code**
+- **Use straightforward patterns and well-known solutions**
+- **Minimize dependencies and abstractions**
+
+### 🧠 CONTEXT MANAGEMENT - CRITICAL MONITORING
+**MANDATORY**: Monitor for context overload and request new window when experiencing:
+- Context becoming too long (>50 exchanges)
+- Making repeated mistakes on simple tasks
+- Difficulty tracking previous decisions
+
+**Protocol**: 
+1. Update memory bank with current status
+2. Create continuation prompt
+3. Request new window
+
+### 🏗️ REUSABILITY CHECKLIST - USE BEFORE EVERY IMPLEMENTATION
+- [ ] **Duplication Check:** Does this functionality already exist?
+- [ ] **Extraction Opportunity:** Can this be made reusable for other services?
+- [ ] **Inheritance Opportunity:** Can this inherit from a base class?
+- [ ] **Simplicity Check:** Is this the simplest approach that works?
+- [ ] **Maintainability Check:** Will this be easy to understand in 6 months?
+- [ ] **Documentation Check:** Is the reusable component properly documented?
+
+## MEMORY BANK SYSTEM OVERVIEW
+
+### Core Memory Bank Files
+- **tasks.md**: Active task tracking with complexity levels and checklists
+- **activeContext.md**: Current session context and immediate focus
+- **progress.md**: Overall project progress and major achievements
+- **best_practices.md**: DRY/KISS principles and implementation guidelines
+- **Creative Phase Docs**: `memory-bank/creative/creative-[feature_name].md`
+- **Reflection Docs**: `memory-bank/reflection/reflection-[task_id].md`
+- **Archive Directory**: `memory-bank/archive/archive-[task_id].md`
+
+### Memory Bank Usage Patterns
+1. **Session Start**: Load context from memory bank files
+2. **During Work**: Reference memory bank for consistency and principles
+3. **Decision Points**: Update memory bank with new decisions
+4. **Session End**: Update memory bank with progress and status
+
+## MODE ACTIVATION PROTOCOL
+
+### Mode Commands
+- **VAN**: Initialization and entry point mode
+- **PLAN**: Planning and design mode
+- **CREATIVE**: Creative decision-making mode
+- **IMPLEMENT**: Code implementation mode
+- **REFLECT**: Task reflection and evaluation mode
+- **ARCHIVE**: Task documentation and archiving mode
+
+### Mode Transition Rules
+1. **Always start with VAN mode** for new tasks or unclear situations
+2. **Follow the sequence**: VAN → PLAN → CREATIVE → IMPLEMENT → REFLECT → ARCHIVE
+3. **Skip modes only when explicitly justified** and documented
+4. **Update memory bank** at each mode transition
+
+## CRITICAL FILE LOCATIONS
+
+All core Memory Bank files reside within the `memory-bank/` directory at the project root:
+- **Tasks File**: `memory-bank/tasks.md`
+- **Active Context File**: `memory-bank/activeContext.md`
+- **Progress File**: `memory-bank/progress.md`
+- **Best Practices File**: `memory-bank/best_practices.md`
+
+**Verification Mandate**: Before any operation, verify the path starts with `memory-bank/`.
+
+## WORKFLOW INTEGRATION
+
+This main rule integrates with all specialized mode rules and ensures:
+1. **Consistent Context**: Memory bank provides shared understanding
+2. **Principle Application**: DRY/KISS principles applied consistently
+3. **Quality Assurance**: Reusability checks prevent duplication
+4. **Progress Tracking**: Continuous documentation of decisions and progress
+5. **Context Management**: Proper handling of context overload situations
+
+**Remember**: Memory bank verification is MANDATORY before any work begins.

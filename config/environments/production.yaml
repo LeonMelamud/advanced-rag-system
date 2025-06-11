@@ -1,0 +1,162 @@
+# Production Environment Configuration
+# This file contains non-sensitive production settings
+# Sensitive keys MUST be in environment variables or secure secret management
+
+# Service Configuration
+services:
+  auth_service:
+    host: "0.0.0.0"
+    port: 8001
+    log_level: "WARNING"
+    
+  file_service:
+    host: "0.0.0.0"
+    port: 8002
+    log_level: "WARNING"
+    
+  chat_service:
+    host: "0.0.0.0"
+    port: 8003
+    log_level: "WARNING"
+    
+  collection_service:
+    host: "0.0.0.0"
+    port: 8004
+    log_level: "WARNING"
+    
+  mcp_orchestrator:
+    host: "0.0.0.0"
+    port: 8005
+    log_level: "WARNING"
+
+# Database Configuration (non-sensitive parts)
+database:
+  host: "${DB_HOST}"  # From environment/secrets
+  port: "${DB_PORT}"
+  name: "${DB_NAME}"
+  pool_size: 50
+  max_overflow: 100
+  echo: false
+  pool_pre_ping: true
+  pool_recycle: 3600
+
+# Redis Configuration (non-sensitive parts)
+redis:
+  host: "${REDIS_HOST}"  # From environment/secrets
+  port: "${REDIS_PORT}"
+  db: 0
+  decode_responses: true
+  socket_keepalive: true
+  socket_keepalive_options: {}
+
+# Vector Database Configuration
+qdrant:
+  host: "${QDRANT_HOST}"  # From environment/secrets
+  port: "${QDRANT_PORT}"
+  grpc_port: "${QDRANT_GRPC_PORT}"
+  timeout: 60
+  prefer_grpc: true
+
+# CORS Configuration
+cors:
+  origins:
+    - "https://yourapp.com"
+    - "https://www.yourapp.com"
+    - "https://admin.yourapp.com"
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+  headers: ["Content-Type", "Authorization", "X-Requested-With"]
+  credentials: true
+
+# LLM Configuration (non-sensitive parts)
+llm:
+  default_provider: "openai"
+  default_model: "gpt-4"
+  default_embedding_model: "text-embedding-3-small"
+  timeout: 120
+  max_retries: 5
+  retry_delay: 1.0
+
+# Chat Configuration
+chat:
+  max_conversation_history: 100
+  max_context_tokens: 16000
+  default_top_k: 10
+  stream_chunk_size: 2048
+
+# RAG Configuration
+rag:
+  context_merge_strategy: "enhanced_rrf"
+  rrf_k: 60.0
+  diversity_penalty: 0.1
+  max_chunks_per_collection: 20
+
+# Collection Configuration
+collections:
+  max_per_user: 200
+  max_documents_per_collection: 50000
+  max_versions: 100
+  default_chunking_strategy: "recursive"
+  default_chunk_size: 1000
+  default_chunk_overlap: 200
+
+# MCP Configuration
+mcp:
+  enable_tool_execution: true
+  tool_execution_timeout: 60
+  max_concurrent_executions: 20
+  enable_sandboxing: true
+  execution_environment: "docker"
+  docker_image: "python:3.13-slim"
+  docker_network: "isolated"
+
+# Security Configuration (non-sensitive parts)
+security:
+  jwt_algorithm: "HS256"
+  access_token_expire_minutes: 15  # Shorter for production
+  refresh_token_expire_days: 30
+  password_min_length: 12  # Stronger requirements
+  max_login_attempts: 3
+  lockout_duration_minutes: 30
+
+# Rate Limiting
+rate_limiting:
+  enabled: true
+  requests_per_minute: 30  # Strict limits
+  burst_size: 5
+
+# Monitoring
+monitoring:
+  enable_metrics: true
+  enable_tracing: true
+  log_requests: false  # Don't log requests in prod
+  log_responses: false
+  enable_health_checks: true
+  health_check_interval: 30
+
+# File Processing
+file_processing:
+  max_file_size_mb: 200
+  allowed_extensions:
+    - ".pdf"
+    - ".txt"
+    - ".docx"
+    - ".md"
+    - ".csv"
+    - ".json"
+    - ".xlsx"
+    - ".pptx"
+  temp_dir: "/app/temp/uploads"
+  cleanup_interval_hours: 6
+
+# Performance
+performance:
+  enable_caching: true
+  cache_ttl: 3600
+  enable_compression: true
+  max_request_size_mb: 100
+
+# Backup and Recovery
+backup:
+  enable_auto_backup: true
+  backup_interval_hours: 24
+  retention_days: 30 

@@ -1,0 +1,3 @@
+"""
+Collection Service package
+"""

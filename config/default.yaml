@@ -1,0 +1,135 @@
+# Advanced RAG System - Default Configuration
+# This file contains default settings for all services
+
+# Database Configuration
+database:
+  url: "postgresql://rag_user:rag_password@localhost:5433/advanced_rag"
+  pool_size: 10
+  max_overflow: 20
+  pool_timeout: 30
+  pool_recycle: 3600
+  echo: false
+
+# Redis Configuration
+redis:
+  url: "redis://localhost:6380"
+  max_connections: 10
+  retry_on_timeout: true
+  socket_timeout: 5
+  socket_connect_timeout: 5
+
+# Qdrant Configuration
+qdrant:
+  url: "http://localhost:6335"
+  timeout: 30
+  prefer_grpc: false
+  api_key: null
+
+# Service Configuration
+services:
+  auth_service:
+    host: "0.0.0.0"
+    port: 8000
+    workers: 1
+    log_level: "INFO"
+    jwt_secret_key: "your-secret-key-change-in-production"
+    jwt_algorithm: "HS256"
+    jwt_expiration_hours: 24
+    
+  file_service:
+    host: "0.0.0.0"
+    port: 8000
+    workers: 1
+    log_level: "INFO"
+    max_file_size_mb: 100
+    allowed_file_types: ["pdf", "txt", "csv", "docx", "md"]
+    storage_path: "/app/storage"
+    
+  chat_service:
+    host: "0.0.0.0"
+    port: 8000
+    workers: 1
+    log_level: "INFO"
+    max_context_tokens: 4000
+    default_temperature: 0.1
+    
+  collection_service:
+    host: "0.0.0.0"
+    port: 8000
+    workers: 1
+    log_level: "INFO"
+    
+  mcp_orchestrator:
+    host: "0.0.0.0"
+    port: 8000
+    workers: 1
+    log_level: "INFO"
+
+# AI/ML Configuration
+ai:
+  # Primary LLM Provider (Gemini)
+  gemini:
+    api_key: "${GEMINI_API_KEY}"
+    model: "gemini-2.0-flash-exp"
+    temperature: 0.1
+    max_tokens: 4000
+    timeout: 30
+    
+  # Fallback LLM Provider (OpenAI)
+  openai:
+    api_key: "${OPENAI_API_KEY}"
+    model: "gpt-4o"
+    temperature: 0.1
+    max_tokens: 4000
+    timeout: 30
+    
+  # Embedding Configuration
+  embeddings:
+    primary:
+      provider: "gemini"
+      model: "text-embedding-004"
+      dimensions: 768
+    fallback:
+      provider: "openai"
+      model: "text-embedding-3-small"
+      dimensions: 1536
+
+# Chunking Configuration
+chunking:
+  default_strategy: "recursive"
+  chunk_size: 1000
+  chunk_overlap: 200
+  separators: ["\n\n", "\n", ". ", "! ", "? ", " "]
+  
+# Retrieval Configuration
+retrieval:
+  default_top_k: 5
+  max_top_k: 20
+  similarity_threshold: 0.7
+  rerank_enabled: true
+  mmr_enabled: true
+  diversity_lambda: 0.5
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file_enabled: false
+  file_path: "/app/logs/app.log"
+  max_file_size_mb: 100
+  backup_count: 5
+
+# Security Configuration
+security:
+  cors_origins: ["http://localhost:3000", "http://localhost:8000"]
+  cors_methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+  cors_headers: ["*"]
+  rate_limit_enabled: true
+  rate_limit_requests: 100
+  rate_limit_window: 60
+
+# Health Check Configuration
+health:
+  check_interval: 30
+  timeout: 10
+  retries: 3 

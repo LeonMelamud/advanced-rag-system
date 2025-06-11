@@ -1,0 +1,140 @@
+# Development Environment Configuration
+# This file contains non-sensitive development settings
+# Sensitive keys should be in .env files or environment variables
+
+# Service Configuration
+services:
+  auth_service:
+    host: "0.0.0.0"
+    port: 8001
+    log_level: "DEBUG"
+    
+  file_service:
+    host: "0.0.0.0"
+    port: 8002
+    log_level: "DEBUG"
+    
+  chat_service:
+    host: "0.0.0.0"
+    port: 8003
+    log_level: "DEBUG"
+    
+  collection_service:
+    host: "0.0.0.0"
+    port: 8004
+    log_level: "DEBUG"
+    
+  mcp_orchestrator:
+    host: "0.0.0.0"
+    port: 8005
+    log_level: "DEBUG"
+
+# Database Configuration (non-sensitive parts)
+database:
+  host: "localhost"
+  port: 5433
+  name: "advanced_rag"
+  pool_size: 10
+  max_overflow: 20
+  echo: true  # SQL logging for development
+
+# Redis Configuration (non-sensitive parts)
+redis:
+  host: "localhost"
+  port: 6380
+  db: 0
+  decode_responses: true
+
+# Vector Database Configuration
+qdrant:
+  host: "localhost"
+  port: 6335
+  grpc_port: 6336
+  timeout: 30
+
+# CORS Configuration
+cors:
+  origins:
+    - "http://localhost:3000"
+    - "http://localhost:8000"
+    - "http://127.0.0.1:3000"
+    - "http://127.0.0.1:8000"
+  methods: ["*"]
+  headers: ["*"]
+  credentials: true
+
+# LLM Configuration (non-sensitive parts)
+llm:
+  default_provider: "openai"
+  default_model: "gpt-4"
+  default_embedding_model: "text-embedding-3-small"
+  timeout: 60
+  max_retries: 3
+
+# Chat Configuration
+chat:
+  max_conversation_history: 50
+  max_context_tokens: 8000
+  default_top_k: 5
+  stream_chunk_size: 1024
+
+# RAG Configuration
+rag:
+  context_merge_strategy: "enhanced_rrf"
+  rrf_k: 60.0
+  diversity_penalty: 0.1
+  max_chunks_per_collection: 10
+
+# Collection Configuration
+collections:
+  max_per_user: 100
+  max_documents_per_collection: 10000
+  max_versions: 50
+  default_chunking_strategy: "recursive"
+  default_chunk_size: 1000
+  default_chunk_overlap: 200
+
+# MCP Configuration
+mcp:
+  enable_tool_execution: true
+  tool_execution_timeout: 30
+  max_concurrent_executions: 10
+  enable_sandboxing: true
+  execution_environment: "docker"
+  docker_image: "python:3.13-slim"
+  docker_network: "bridge"
+
+# Security Configuration (non-sensitive parts)
+security:
+  jwt_algorithm: "HS256"
+  access_token_expire_minutes: 30
+  refresh_token_expire_days: 7
+  password_min_length: 8
+  max_login_attempts: 5
+  lockout_duration_minutes: 15
+
+# Rate Limiting
+rate_limiting:
+  enabled: true
+  requests_per_minute: 100
+  burst_size: 20
+
+# Monitoring
+monitoring:
+  enable_metrics: true
+  enable_tracing: true
+  log_requests: true
+  log_responses: false  # Don't log response bodies in dev
+
+# File Processing
+file_processing:
+  max_file_size_mb: 100
+  allowed_extensions:
+    - ".pdf"
+    - ".txt"
+    - ".docx"
+    - ".md"
+    - ".csv"
+    - ".json"
+  temp_dir: "/tmp/rag_uploads"
+  cleanup_interval_hours: 24 

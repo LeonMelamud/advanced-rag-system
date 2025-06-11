@@ -1,0 +1,16 @@
+FROM collections_ai_assistance-base
+
+# Install service-specific dependencies (override in actual Dockerfile)
+# RUN pip install --no-cache-dir service-specific-packages
+
+# Copy application code maintaining directory structure
+# COPY backend/SERVICE_NAME/__init__.py /app/backend/SERVICE_NAME/__init__.py
+# COPY backend/SERVICE_NAME/app /app/backend/SERVICE_NAME/app
+COPY backend/common /app/backend/common
+
+# Set ownership and switch to non-root user
+RUN chown -R app:app /app
+USER app
+
+# Standard service command (working directory already set in base)
+# CMD ["python", "-m", "uvicorn", "backend.SERVICE_NAME.app.main:app", "--host", "0.0.0.0", "--port", "8000"] 

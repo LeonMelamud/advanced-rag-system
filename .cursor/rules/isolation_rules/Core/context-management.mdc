@@ -1,0 +1,88 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# CONTEXT MANAGEMENT AND NEW WINDOW PROTOCOL
+
+## 🧠 CONTEXT OVERLOAD DETECTION
+
+### When to Request New Window
+**MANDATORY**: Request a new window when experiencing any of these conditions:
+
+1. **Context Length Issues**
+   - Conversation becoming too long (>50 exchanges)
+   - Token limits affecting response quality
+   - Difficulty tracking previous decisions
+
+2. **Error Pattern Detection**
+   - Making repeated mistakes on simple tasks
+   - Contradicting previous statements
+   - Losing track of project state
+
+3. **Complexity Overload**
+   - Multiple complex tasks being juggled
+   - Difficulty maintaining focus on current priority
+   - Confusion about current project status
+
+4. **Memory Bank Inconsistencies**
+   - Conflicting information in memory bank files
+   - Uncertainty about current progress
+   - Need to reset and refocus
+
+## 🔄 NEW WINDOW PROTOCOL
+
+### Before Requesting New Window
+1. **Update Memory Bank Files**
+   - Update `memory-bank/tasks.md` with current progress
+   - Update `memory-bank/activeContext.md` with current focus
+   - Update `memory-bank/progress.md` with achievements
+   - Document any critical decisions or blockers
+
+2. **Create Continuation Prompt**
+   - Summarize current status clearly
+   - Identify next immediate tasks
+   - Highlight any critical issues or blockers
+   - Provide clear context for new session
+
+### Request Format
+```
+I'm experiencing context overload and need to open a new window to continue effectively. 
+
+Let me update the memory bank and provide a continuation prompt for the new session.
+```
+
+## 📝 CONTINUATION PROMPT TEMPLATE
+
+### Essential Elements
+1. **Project Overview**: Brief project description and current phase
+2. **Current Status**: What's been completed and what's in progress
+3. **Immediate Tasks**: Next 3-5 specific tasks to focus on
+4. **Critical Context**: Any important decisions or blockers
+5. **Success Criteria**: How to know when current phase is complete
+
+### Quality Checklist
+- [ ] Memory bank files updated with current progress
+- [ ] Clear identification of next immediate tasks
+- [ ] Any critical issues or blockers documented
+- [ ] Success criteria clearly defined
+- [ ] Continuation prompt is self-contained and actionable
+
+## 🎯 BENEFITS OF NEW WINDOW
+
+1. **Fresh Context**: Clean slate for focused work
+2. **Reduced Errors**: Eliminate confusion from long context
+3. **Better Focus**: Clear priorities and immediate tasks
+4. **Improved Quality**: Better decision-making with fresh perspective
+5. **Efficient Progress**: Faster task completion with clear focus
+
+## 🚨 MANDATORY USAGE
+
+**Use this protocol immediately when:**
+- Making mistakes on previously completed tasks
+- Contradicting earlier statements or decisions
+- Feeling overwhelmed by context length
+- Unable to maintain clear focus on priorities
+- Memory bank files becoming inconsistent
+
+This ensures consistent progress and maintains high-quality work throughout the project lifecycle.

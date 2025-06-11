@@ -1,0 +1,56 @@
+FROM python:3.13-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    curl \
+    libmagic1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install common Python dependencies
+RUN pip install --no-cache-dir \
+    fastapi \
+    uvicorn \
+    sqlalchemy \
+    asyncpg \
+    psycopg2-binary \
+    alembic \
+    redis \
+    pydantic \
+    pydantic-settings \
+    email-validator \
+    httpx \
+    python-multipart \
+    python-jose[cryptography] \
+    passlib[bcrypt] \
+    python-magic \
+    structlog \
+    pyyaml
+
+# Create backend directory structure for proper import paths
+RUN mkdir -p /app/backend/common
+
+# Copy backend package init file to make it a proper Python package
+COPY backend/__init__.py /app/backend/__init__.py
+
+# Set Python path to include the app directory for backend imports
+ENV PYTHONPATH=/app
+
+# Create non-root user
+RUN useradd --create-home --shell /bin/bash app
+
+# Create common directories
+RUN mkdir -p /app/logs /app/storage
+
+# Set standard working directory for all services
+WORKDIR /app
+
+# Expose port (default for all services)
+EXPOSE 8000
+
+# Default health check (can be overridden)
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8000/health/live || exit 1 

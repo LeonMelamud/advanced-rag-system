@@ -1,0 +1,101 @@
+{
+  "timestamp": "2025-05-30T23:24:04.426150",
+  "duration_seconds": 0.11,
+  "health_checks": {
+    "auth": {
+      "liveness": true,
+      "readiness": true,
+      "readiness_data": {
+        "status": "ready",
+        "service": "auth_service",
+        "timestamp": "2025-05-30T20:24:04.394711",
+        "checks": {
+          "database": {
+            "status": "connected",
+            "response_time_ms": 0
+          },
+          "redis": {
+            "status": "connected",
+            "response_time_ms": 0
+          }
+        }
+      },
+      "url": "http://localhost:8001"
+    },
+    "file": {
+      "liveness": false,
+      "readiness": false,
+      "error": "All connection attempts failed",
+      "url": "http://localhost:8002"
+    },
+    "chat": {
+      "liveness": false,
+      "readiness": false,
+      "error": "All connection attempts failed",
+      "url": "http://localhost:8003"
+    },
+    "collection": {
+      "liveness": false,
+      "readiness": false,
+      "error": "All connection attempts failed",
+      "url": "http://localhost:8004"
+    },
+    "mcp": {
+      "liveness": false,
+      "readiness": false,
+      "error": "All connection attempts failed",
+      "url": "http://localhost:8005"
+    }
+  },
+  "authentication": {
+    "registration": {
+      "status_code": 200,
+      "success": true,
+      "response": {
+        "id": "mock_user_id",
+        "email": "test@example.com",
+        "full_name": "Test User",
+        "is_active": true,
+        "created_at": "2025-05-30T20:24:04.408822"
+      }
+    },
+    "login": {
+      "status_code": 401,
+      "success": false
+    }
+  },
+  "service_endpoints": {
+    "error": "No auth token available"
+  },
+  "database_connectivity": {
+    "auth": {
+      "database_status": null,
+      "redis_status": null,
+      "qdrant_status": null,
+      "full_health": {
+        "status": "healthy",
+        "service": "auth_service",
+        "timestamp": "2025-05-30T20:24:04.419950",
+        "version": "1.0.0"
+      }
+    },
+    "file": {
+      "error": "All connection attempts failed"
+    },
+    "chat": {
+      "error": "All connection attempts failed"
+    },
+    "collection": {
+      "error": "All connection attempts failed"
+    },
+    "mcp": {
+      "error": "All connection attempts failed"
+    }
+  },
+  "summary": {
+    "services_healthy": "1/5",
+    "authentication_working": false,
+    "endpoints_working": "0/0",
+    "overall_status": "FAIL"
+  }
+}

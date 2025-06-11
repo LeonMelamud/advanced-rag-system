@@ -1,0 +1,40 @@
+-- Advanced RAG System Database Initialization
+-- This script sets up the initial database structure
+
+-- Create extensions
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "pg_trgm";
+
+-- Create schemas for different services
+CREATE SCHEMA IF NOT EXISTS auth;
+CREATE SCHEMA IF NOT EXISTS files;
+CREATE SCHEMA IF NOT EXISTS collections;
+CREATE SCHEMA IF NOT EXISTS chat;
+CREATE SCHEMA IF NOT EXISTS mcp;
+
+-- Grant permissions to the rag_user
+GRANT USAGE ON SCHEMA auth TO rag_user;
+GRANT USAGE ON SCHEMA files TO rag_user;
+GRANT USAGE ON SCHEMA collections TO rag_user;
+GRANT USAGE ON SCHEMA chat TO rag_user;
+GRANT USAGE ON SCHEMA mcp TO rag_user;
+
+GRANT CREATE ON SCHEMA auth TO rag_user;
+GRANT CREATE ON SCHEMA files TO rag_user;
+GRANT CREATE ON SCHEMA collections TO rag_user;
+GRANT CREATE ON SCHEMA chat TO rag_user;
+GRANT CREATE ON SCHEMA mcp TO rag_user;
+
+-- Set default privileges for future tables
+ALTER DEFAULT PRIVILEGES IN SCHEMA auth GRANT ALL ON TABLES TO rag_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA files GRANT ALL ON TABLES TO rag_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA collections GRANT ALL ON TABLES TO rag_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA chat GRANT ALL ON TABLES TO rag_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA mcp GRANT ALL ON TABLES TO rag_user;
+
+-- Set default privileges for sequences
+ALTER DEFAULT PRIVILEGES IN SCHEMA auth GRANT ALL ON SEQUENCES TO rag_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA files GRANT ALL ON SEQUENCES TO rag_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA collections GRANT ALL ON SEQUENCES TO rag_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA chat GRANT ALL ON SEQUENCES TO rag_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA mcp GRANT ALL ON SEQUENCES TO rag_user; 
